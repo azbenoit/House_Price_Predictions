@@ -1,0 +1,1 @@
+Machine learning algorithm to predict house prices in Ames, Iowa based on 79 variables. This is my second capstone project for Harvardx's data science professional certificate program.
