@@ -7,10 +7,13 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+# Setting the working directory
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 ```
 
+
+
 ## Introduction
-(describes the dataset and variables, and summarizes the goal of the project and key steps that were performed.)
 
 This project uses the Ames Housing Dataset. This dataset includes information about 2930 house sales from 2006 to 2010 in Ames, Iowa, and contains 79 different explanatory variables. It was put together by Dean De Cock from Truman State University; more information about it can be found [here](http://jse.amstat.org/v19n3/decock.pdf).
 
@@ -38,10 +41,49 @@ In short, the final model was obtained by:
  - Fitting a weighted knn model to the numerical variables of the train set, predicting centered rating  
  - Fitting a random forest model to the categorical vriables of the train set, predicting centered rating, minus predictions from the knn model.  
 
+```{r load, include=FALSE}
+# Required packages:
+if(!require(tidyverse)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+if(!require(caret)) install.packages("caret", repos = "http://cran.us.r-project.org")
+# if(!require(matrixStats)) install.packages("data.table", repos = "http://cran.us.r-project.org")
+if(!require(kknn)) install.packages("caret", repos = "http://cran.us.r-project.org")
+if(!require(Rborist)) install.packages("caret", repos = "http://cran.us.r-project.org")
+
+
+# Loading training and testing sets
+test <- read.csv("datasets/test.csv")
+train <- read.csv("datasets/train.csv")
+sample_submission <- read.csv("datasets/sample_submission.csv")
+# actual prices for testing purposes:
+actual_prices <- read.csv("datasets/full-score.csv")
+```
+
 ## Method/Analysis
+(explains the process and techniques used, including data cleaning, data exploration and visualization, any insights gained, and your modeling approach)
+
+### Data wrangling and cleaning
+
+I acquired the dataset from a competition, therefore it was already split 50/50 into a train set and test set. The train set contains a "Sale Price" column, while the test set does not. Since I need to show my final RMSE in this report I also downloaded the actual test set prices from the public dataset, but I only used it to calculate the RMSE of my final model.
+
+
+
+
+### Baseline model
+
+
+
+### Weighted Knn
+
+
+
+### Random Forest
+
 
 
 ## Results
 
 
+
 ## Conclusion
+
+

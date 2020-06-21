@@ -2,7 +2,8 @@
 if(!require(tidyverse)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
 if(!require(caret)) install.packages("caret", repos = "http://cran.us.r-project.org")
 # if(!require(matrixStats)) install.packages("data.table", repos = "http://cran.us.r-project.org")
-if(!require(k)) install.packages("caret", repos = "http://cran.us.r-project.org")
+if(!require(kknn)) install.packages("caret", repos = "http://cran.us.r-project.org")
+if(!require(Rborist)) install.packages("caret", repos = "http://cran.us.r-project.org")
 
 
 # Loading training and testing sets
@@ -210,9 +211,10 @@ y_minus_effects <- y_centered - num_effect_train
 
 # RF 2, electric boogaloo
 categorical_cols_train <- categorical_cols[i,] %>% cbind(y_minus_effects)
-fit_cat_kknn_rf <- train(y_minus_effects~., method = "Rborist", data = categorical_cols_train, verbose = T)
-fit_cat_kknn_rf$bestTune
-predictions_cat_rf_2 <- predict(fit_cat_rf_2, test, type = "raw") + mu + num_effect_test
-predictions_cat_rf_2 <- data.frame(Id = test$Id, SalePrice = predictions_cat_rf_2)
-RMSE_log(actual_prices$SalePrice, predictions_cat_rf_2$SalePrice)
-write.csv(predictions_cat_rf_2, file = "predictions/predictions_cat_rf_2.csv", row.names = F)
+fit_kknn_rf <- train(y_minus_effects~., method = "Rborist", data = categorical_cols_train,
+                     verbose = T, tuneGrid = data.frame(predFixed = 2, minNode = 3))
+fit_kknn_rf$bestTune
+predictions_kknn_rf <- predict(fit_kknn_rf, test, type = "raw") + mu + num_effect_test
+predictions_kknn_rf <- data.frame(Id = test$Id, SalePrice = predictions_kknn_rf)
+RMSE_log(actual_prices$SalePrice, predictions_kknn_rf$SalePrice)
+write.csv(predictions_kknn_rf, file = "predictions/predictions_kknn_rf.csv", row.names = F)
