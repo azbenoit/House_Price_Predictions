@@ -175,7 +175,7 @@ In order to find the best measure of center for the Sale Price, we can plot its 
 ```{r}
 # Histogram of the SalePrice distribution
 train %>% ggplot(aes(y)) +
-  geom_histogram() +
+  geom_histogram(bins = 30) +
   ggtitle("Sale Price Distribution Histogram")
 ```
 

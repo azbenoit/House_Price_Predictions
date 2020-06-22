@@ -150,7 +150,7 @@ y_minus_effects <- y_centered - num_effect_train
 # Implementing random forest
 categorical_cols_train <- categorical_cols[i,] %>% cbind(y_minus_effects)
 fit_kknn_rf <- train(y_minus_effects~., method = "Rborist", data = categorical_cols_train,
-                     verbose = T, tuneGrid = data.frame(predFixed = 2, minNode = 3))
+                     verbose = T)
 fit_kknn_rf$results
 predictions_kknn_rf <- predict(fit_kknn_rf, test, type = "raw") + mu + num_effect_test
 predictions_kknn_rf <- data.frame(Id = test$Id, SalePrice = predictions_kknn_rf)
